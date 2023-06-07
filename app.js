@@ -24,7 +24,7 @@ app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
 // 設定首頁路由
 app.get('/', (req, res) => {
-  Record.find() // 取出 Todo model 裡的所有資料
+  Record.find() // 取出 record model 裡的所有資料
     .lean() // 把 Mongoose 的 Model 物件轉換成乾淨的 JavaScript 資料陣列
     .then(records => res.render('index', { records })) // 將資料傳給 index 樣板
     .catch(error => console.error(error)) // 錯誤處理
@@ -42,10 +42,27 @@ app.get('/records/:id', (req, res) => {
   const id = req.params.id
   return Record.findById(id)
     .lean()
-    .then((record) => res.render('detail', { record }))
+    .then(record => res.render('detail', { record }))
     .catch(error => console.log(error))
 })
-
+app.get('/records/:id', (req, res) => {
+  const id = req.params.id
+  return Record.findById(id)
+    .lean()
+    .then(record => res.render('edit', { record }))
+    .catch(error => console.log(error))
+})
+app.post('/records/:id/edit', (req, res) => {
+  const id = req.params.id
+  const name = req.body.name
+  return Record.findById(id)
+    .then(record => {
+      record.name = name
+      return record.save()
+    })
+    .then(() => res.redirect(`/records/${id}`))
+    .catch(error => console.log(error))
+})
 // 設定 port 3000
 app.listen(3000, () => {
   console.log('App is running on http://localhost:3000')
