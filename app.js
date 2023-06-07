@@ -38,6 +38,13 @@ app.post('/records', (req, res) => {
     .then(() => res.redirect('/')) // 新增完成後導回首頁
     .catch(error => console.log(error))
 })
+app.get('/records/:id', (req, res) => {
+  const id = req.params.id
+  return Record.findById(id)
+    .lean()
+    .then((record) => res.render('detail', { record }))
+    .catch(error => console.log(error))
+})
 
 // 設定 port 3000
 app.listen(3000, () => {
