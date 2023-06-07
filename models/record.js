@@ -13,6 +13,10 @@ const recordSchema = new Schema({
     type: Date,
     required: true
   },
+  amout:{
+    type: Number,
+    required: true
+  },
   userId: {
     type: Number,
     ref: 'User',
