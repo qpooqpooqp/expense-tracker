@@ -13,3 +13,4 @@ node_modules
 *.log
 *.gz
 .env
+123.js

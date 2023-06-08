@@ -13,7 +13,7 @@ const recordSchema = new Schema({
     type: Date,
     required: true
   },
-  amout:{
+  amout: {
     type: Number,
     required: true
   },
