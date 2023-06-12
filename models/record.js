@@ -17,14 +17,14 @@ const recordSchema = new Schema({
     type: Number,
     required: true
   },
-  userId: {
-    type: Number,
+  userId: { // 加入關聯設定
+    type: Schema.Types.ObjectId,
     ref: 'User',
     index: true,
-    require: true
+    required: true
   },
   categoryId: {
-    type: Number,
+    type: Schema.Types.ObjectId,
     ref: 'Category',
     index: true,
     require: true
