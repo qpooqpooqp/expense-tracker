@@ -9,6 +9,10 @@ router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/users/login'
 }))
+router.get('/logout', (req, res) => {
+  req.logout()
+  res.redirect('/users/login')
+})
 router.get('/register', (req, res) => {
   // 取得註冊表單參數
   const { name, email, password, confirmPassword } = req.body

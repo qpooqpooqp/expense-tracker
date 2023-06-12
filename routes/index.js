@@ -1,11 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const home = require('./modules/home')
-const users = require('./modules/users')
-// 引入 records 模組程式碼
 const records = require('./modules/records')
-router.use('/', home)
-// 將網址結構符合 /records 字串開頭的 request 導向 records 模組
-router.use('/records', records)
+const users = require('./modules/users')
+const home = require('./modules/home')
+const { authenticator } = require('../middleware/auth') // 掛載 middleware
+router.use('/records', authenticator, records) // 加入驗證程序
 router.use('/users', users)
+router.use('/', authenticator, home) // 加入驗證程序
 module.exports = router
