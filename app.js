@@ -18,7 +18,9 @@ app.use(session({
 }))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+const flash = require('connect-flash')
 usePassport(app)
+app.use(flash())
 app.use((req, res, next) => {
   // 你可以在這裡 console.log(req.user) 等資訊來觀察
   res.locals.isAuthenticated = req.isAuthenticated()
