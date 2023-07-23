@@ -1,13 +1,18 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-const categorySchema = new Schema({
-  categoryId: {
-    type: Number, // 資料型別是字串
-    required: true // 這是個必填欄位
-  },
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+mongoose.set('strictQuery', false)
+const autoIncrement = require('mongoose-sequence')(mongoose)
+const categorySchema = new mongoose.Schema({
+  _id: Number,
   name: {
-    type: String, // 資料型別是字串
-    required: true // 這是個必填欄位
-  }
+    type: String,
+    required: true
+  },
+  icon: String
 })
+
+categorySchema.plugin(autoIncrement, { id: 'category_id_counter', inc_field: '_id' })
+
 module.exports = mongoose.model('Category', categorySchema)

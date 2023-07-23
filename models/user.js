@@ -1,10 +1,9 @@
 const mongoose = require('mongoose')
+mongoose.set('strictQuery', false)
+const autoIncrement = require('mongoose-sequence')(mongoose)
 const Schema = mongoose.Schema
 const userSchema = new Schema({
-  user_id: {
-    type: Number,
-    required: true
-  },
+  _id: Number,
   name: {
     type: String,
     required: true
@@ -22,4 +21,6 @@ const userSchema = new Schema({
     default: Date.now
   }
 })
+userSchema.plugin(autoIncrement, { id: 'user_id_counter', inc_field: '_id' })
+
 module.exports = mongoose.model('User', userSchema)

@@ -1,9 +1,49 @@
-<form action="/records/{{ record._id }}?_method=PUT" method="POST" style="display: inline;">
-  <div class="input-group">
-    <div class="input-group-text">
-      <input type="checkbox" class="form-check-input mt-0" name="isDone" {{#if record.isDone }} checked {{/if}}>
+<form action="/records/{{ record._id }}?_method=PUT" method="POST">
+  {{!-- 提示 --}}
+  <div class="form-group row">
+    <label for="hint" class="col-sm-2 col-form-label">*必填欄位</label>
+    <div class="col-sm-10">
+      <input type="text" readonly class="form-control-plaintext" id="hint" value="請輸入你的支出">
     </div>
-    <input class="form-control" type="text" placeholder="name" name="name" value="{{ record.name }}">
-    <button class="btn btn-success" type="submit">Save</button>
   </div>
+
+  {{!-- 名稱 --}}
+  <div class="form-group row">
+    <label for="name" class="col-sm-2 col-form-label">名稱*</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="name" name="name" value="{{ record.name}}">
+    </div>
+  </div>
+
+  {{!-- 日期 --}}
+  <div class="form-group row">
+    <label for="date" class="col-sm-2 col-form-label">日期*</label>
+    <div class="col-sm-10">
+      <input type="date" class="form-control" id="date" name="date" value={{ prettifyDate record.date " YYYY-MM-DD" }}>
+    </div>
+  </div>
+
+  {{!-- 類別 --}}
+  <div class="form-group row">
+    <label for="category" class="col-sm-2 col-form-label">類別*</label>
+    <div class="col-sm-10">
+      <select id="category" class="form-select" aria-label="Default select example" name="categoryId">
+        {{#each categories}}
+        <option {{#ifEquals @index ../categoryId}}selected{{/ifEquals}} value="{{this._id}}">{{this.name}}
+        </option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+
+  {{!-- 金額 --}}
+  <div class="form-group row">
+    <label for="amount" class="col-sm-2 col-form-label">金額*</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="amount" name="amount" min="0" value={{record.amount}}>
+    </div>
+  </div>
+
+  <button type="submit">送出</button>
+  <a href="/">返回</a>
 </form>
